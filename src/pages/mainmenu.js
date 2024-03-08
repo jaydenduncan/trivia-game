@@ -11,7 +11,7 @@ function MainMenu(){
             <div className="playBtnDiv">
                 <Link to='categories'>
                     <div className="playBtn">
-                        <FontAwesomeIcon className='playIcon' icon={faPlay} />
+                        <FontAwesomeIcon id='playIcon' icon={faPlay} />
                     </div>
                 </Link>
             </div>

@@ -8,6 +8,8 @@ a{
   text-decoration: none;
 }
 
+/* Main Menu Styles */
+
 .container{
   font-family: "Merriweather Sans", sans-serif;
   font-weight: 300;
@@ -38,7 +40,7 @@ a{
   padding: 12px;
 }
 
-.playIcon{
+#playIcon{
   font-size: 125px;
   color: black;
   margin-left: 20px;
@@ -69,6 +71,76 @@ a{
   background-color: #41b310;
   font-size: 25px;
   cursor: pointer;
+}
+
+/* Categories Styles */
+
+.categories{
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: auto;
+  justify-items: center;
+  justify-content: space-evenly;
+}
+
+.categories div{
+  height: 20vh;
+  width: 20vw;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.categories .title{
+  background-color: #d4cfcf;
+  border-radius: 5px;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 0px;
+  font-family: "Merriweather Sans", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.categories .catIcon{
+  opacity: 0.8;
+  font-size: 75px;
+  color: black;
+}
+
+.categories .generalCategory{
+  background-color: #bebfb4;
+}
+
+.categories .artCategory{
+  background-color: #ed1c20;
+}
+
+.categories .scienceCategory{
+  background-color: #0cc92c;
+}
+
+.categories .geographyCategory{
+  background-color: #1092e3;
+}
+
+.categories .historyCategory{
+  background-color: #ed9d13;
+}
+
+.categories .entertainmentCategory{
+  background-color: #c623db;
+}
+
+.categories .mathCategory{
+  background-color: #45f7da;
+}
+
+.categories .sportsCategory{
+  background-color: #edf551;
 }
 
 @media screen and (max-height: 750px){
