@@ -1,3 +1,4 @@
+import "../css/mainmenu.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/fontawesome-free-solid";
@@ -5,7 +6,7 @@ import { faPlay } from "@fortawesome/fontawesome-free-solid";
 function MainMenu(){
     return (
         <div className="container">
-            <div className="heading">
+            <div className="mmHeading">
                 <h1>Trivia Rush</h1>
             </div>
             <div className="playBtnDiv">

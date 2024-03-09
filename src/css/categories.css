@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+/* Categories Styles */
+
+.container .catHeading{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    justify-items: center;
+    background-color: #39046e;
+}
+  
+.catHeading .backBtn{
+    font-family: "Merriweather Sans", sans-serif;
+    font-weight: 300;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2vh;
+    width: 10vw;
+    background-color: #ed9e28;
+    color: white;
+    border: 0px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    background: rgba(204, 204, 204, 0);
+    cursor: pointer;
+}
+  
+.catHeading .backBtn #backBtnLeftArrowIcon{
+    display: inline;
+    font-size: 18px;
+    opacity: 0.8;
+}
+  
+.catHeading .backBtn p{
+    display: inline;
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+.catHeading .categoriesTitle{
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+  
+.catHeading .categoriesTitle h1{
+    color: #ed9e28;
+    font-family: "Merriweather Sans", sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    opacity: 0.8;
+}
+  
+.catHeading .infoBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7vh;
+    width: 5vw;
+    background-color: #ed9e28;
+    border-radius: 400px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: rgba(204, 204, 204, 0);
+}
+  
+.catHeading .infoBtn #infoIcon{
+    color: white;
+    font-size: 50px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+  
+.categories{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: auto;
+    justify-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+  
+.categories div{
+    height: 20vh;
+    width: 20vw;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+  
+.categories .title{
+    background-color: #d4cfcf;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 0px;
+    font-family: "Merriweather Sans", sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+}
+  
+.categories .catIcon{
+    opacity: 0.8;
+    font-size: 75px;
+    color: black;
+}
+  
+.categories .generalCategory{
+    background-color: #bebfb4;
+}
+  
+.categories .artCategory{
+    background-color: #ed1c20;
+}
+  
+.categories .scienceCategory{
+    background-color: #0cc92c;
+}
+  
+.categories .geographyCategory{
+    background-color: #1092e3;
+}
+  
+.categories .historyCategory{
+    background-color: #ed9d13;
+}
+  
+.categories .entertainmentCategory{
+    background-color: #c623db;
+}
+  
+.categories .mathCategory{
+    background-color: #45f7da;
+}
+  
+.categories .sportsCategory{
+    background-color: #edf551;
+}
+
+@media screen and (max-height: 850px) {
+    .categories .catIcon{
+        font-size: 60px;
+    }
+    .categories .title{
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-height: 740px) {
+    .categories .catIcon{
+        font-size: 55px;
+    }
+    .categories .title{
+        padding: 10px;
+    }
+}
+
+@media screen and (min-height: 1000px) {
+    .catHeading .backBtn #backBtnLeftArrowIcon{
+        font-size: 22px;
+    }
+    .catHeading .backBtn p{
+        font-size: 22px;
+    }
+    .catHeading .categoriesTitle h1{
+        font-size: 35px;
+    }
+    .catHeading .infoBtn #infoIcon{
+        font-size: 60px;
+    }
+    .categories .catIcon{
+        font-size: 85px;
+    }
+    .categories .title{
+        font-size: 30px;
+    }
+}
+
+@media screen and (min-height: 1250px) {
+    .catHeading .backBtn #backBtnLeftArrowIcon{
+        font-size: 25px;
+    }
+    .catHeading .backBtn p{
+        font-size: 25px;
+    }
+    .catHeading .categoriesTitle h1{
+        font-size: 40px;
+    }
+    .catHeading .infoBtn #infoIcon{
+        font-size: 70px;
+    }
+    .categories .catIcon{
+        font-size: 130px;
+    }
+}
+
+@media screen and (min-height: 1400px) {
+    .categories .catIcon{
+        font-size: 155px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .categories{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        justify-items: center;
+        margin-bottom: 20px;
+    }
+    .categories div{
+        height: 20vh;
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .catHeading .backBtn #backBtnLeftArrowIcon{
+        font-size: 15px;
+    }
+    .catHeading .backBtn p{
+        font-size: 15px;
+    }
+    .catHeading .categoriesTitle h1{
+        font-size: 25px;
+    }
+    .catHeading .infoBtn #infoIcon{
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .catHeading .backBtn #backBtnLeftArrowIcon{
+        font-size: 12px;
+    }
+    .catHeading .backBtn p{
+        font-size: 12px;
+    }
+    .catHeading .categoriesTitle h1{
+        font-size: 20px;
+    }
+    .catHeading .infoBtn #infoIcon{
+        font-size: 30px;
+    }
+}

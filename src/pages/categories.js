@@ -1,9 +1,12 @@
+import "../css/categories.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBrain, faT } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faBrain } from "@fortawesome/free-solid-svg-icons";
 import { faPaintBrush } from "@fortawesome/fontawesome-free-solid";
 import { faFlask } from "@fortawesome/fontawesome-free-solid";
-import { faGlobe } from "@fortawesome/fontawesome-free-solid";
+import { faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faScroll } from "@fortawesome/free-solid-svg-icons";
 import { faTv } from "@fortawesome/free-solid-svg-icons";
 import { faCalculator } from "@fortawesome/free-solid-svg-icons";
@@ -12,8 +15,19 @@ import { faFootball } from "@fortawesome/free-solid-svg-icons";
 function Categories(){
     return (
         <div className="container">
-            <div className="heading">
-                <h1>Categories</h1>
+            <div className="catHeading">
+                <Link to="/">
+                    <div className="backBtn">
+                        <FontAwesomeIcon id="backBtnLeftArrowIcon" icon={faChevronLeft} />
+                        <p>Main Menu</p>
+                    </div>
+                </Link>
+                <div className="categoriesTitle">
+                    <h1>Categories</h1>
+                </div>
+                <div className="infoBtn">
+                    <FontAwesomeIcon id="infoIcon" icon={faCircleInfo} />
+                </div>
             </div>
 
             <div className="categories">
@@ -30,7 +44,7 @@ function Categories(){
                     <p className="title">Science</p>
                 </div>
                 <div className="geographyCategory">
-                    <FontAwesomeIcon className="catIcon" id="geographyIcon" icon={faGlobe} />
+                    <FontAwesomeIcon className="catIcon" id="geographyIcon" icon={faMapLocationDot} />
                     <p className="title">Geography</p>
                 </div>
                 <div className="historyCategory">
