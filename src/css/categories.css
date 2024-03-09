@@ -26,6 +26,10 @@
     background: rgba(204, 204, 204, 0);
     cursor: pointer;
 }
+
+.catHeading .backBtn:hover{
+    color:#5e5e5b;
+}
   
 .catHeading .backBtn #backBtnLeftArrowIcon{
     display: inline;
@@ -74,6 +78,10 @@
     opacity: 0.8;
     cursor: pointer;
 }
+
+.catHeading .infoBtn #infoIcon:hover{
+    color: #5e5e5b;
+}
   
 .categories{
     display: grid;
@@ -93,6 +101,11 @@
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
+    transition: .2s;
+}
+
+.categories div:hover{
+    transform: scale(1.1);
 }
   
 .categories .title{
