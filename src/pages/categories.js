@@ -12,6 +12,17 @@ import { faTv } from "@fortawesome/free-solid-svg-icons";
 import { faCalculator } from "@fortawesome/free-solid-svg-icons";
 import { faFootball } from "@fortawesome/free-solid-svg-icons";
 
+function togglePopup(){
+    let catInfo = document.getElementById("catInfo");
+
+    if(catInfo.style.visibility === "hidden"){
+        catInfo.style.visibility = "visible";
+    }
+    else{
+        catInfo.style.visibility = "hidden";
+    }
+}
+
 function Categories(){
     return (
         <div className="container">
@@ -26,7 +37,8 @@ function Categories(){
                     <h1>Categories</h1>
                 </div>
                 <div className="infoBtn">
-                    <FontAwesomeIcon id="infoIcon" icon={faCircleInfo} />
+                    <FontAwesomeIcon id="infoIcon" icon={faCircleInfo} onClick={togglePopup} />
+                    <p id="catInfo">Choose one of the categories below to play! Good luck!</p>
                 </div>
             </div>
 
