@@ -5,6 +5,7 @@ import Categories from './pages/categories';
 import Stats from './pages/stats';
 import Settings from './pages/settings';
 import Help from './pages/help';
+import Confirm from './pages/confirm';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='stats' element={<Stats />} />
         <Route path='settings' element={<Settings />} />
         <Route path='help' element={<Help />} />
+        <Route path='categories/:category/confirm' element={<Confirm />} />
       </Routes>
     </BrowserRouter>
   );

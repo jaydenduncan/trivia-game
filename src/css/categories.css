@@ -83,7 +83,7 @@
     color: #5e5e5b;
 }
 
-.catHeading .infoBtn #catInfo{
+.catHeading .infoBtn #infoPopup{
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -204,7 +204,7 @@
     .catHeading .infoBtn #infoIcon{
         font-size: 60px;
     }
-    .catHeading .infoBtn #catInfo{
+    .catHeading .infoBtn #infoPopup{
         font-size: 17px;
         bottom: 87%;
     }
@@ -229,7 +229,7 @@
     .catHeading .infoBtn #infoIcon{
         font-size: 70px;
     }
-    .catHeading .infoBtn #catInfo{
+    .catHeading .infoBtn #infoPopup{
         font-size: 18px;
     }
     .categories .catIcon{
@@ -254,7 +254,7 @@
 }
 
 @media screen and (min-width: 1201px) {
-    .catHeading .infoBtn #catInfo{
+    .catHeading .infoBtn #infoPopup{
         left: 75%;
     }
 }
@@ -272,7 +272,7 @@
     .catHeading .infoBtn #infoIcon{
         font-size: 40px;
     }
-    .catHeading .infoBtn #catInfo{
+    .catHeading .infoBtn #infoPopup{
         font-size: 12px;
         bottom: 88%;
         left: 60%;
@@ -292,7 +292,7 @@
     .catHeading .infoBtn #infoIcon{
         font-size: 30px;
     }
-    .catHeading .infoBtn #catInfo{
+    .catHeading .infoBtn #infoPopup{
         font-size: 10px;
         bottom: 88%;
         left: 55%;
