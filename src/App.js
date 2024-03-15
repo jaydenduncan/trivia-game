@@ -13,10 +13,10 @@ function App() {
       <Routes>
         <Route index element={<MainMenu />} />
         <Route path='categories' element={<Categories />} />
+        <Route path='categories/:category/confirm' element={<Confirm />} />
         <Route path='stats' element={<Stats />} />
         <Route path='settings' element={<Settings />} />
         <Route path='help' element={<Help />} />
-        <Route path='categories/:category/confirm' element={<Confirm />} />
       </Routes>
     </BrowserRouter>
   );
