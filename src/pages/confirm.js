@@ -9,6 +9,7 @@ import img_math from './images/img_math.png';
 import img_sports from './images/img_sports.png';
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Confirm(){
     const [theme, setTheme] = useState("#ffffff");
@@ -56,11 +57,13 @@ function Confirm(){
             <div id="confirmPage">
                 <h1>Category: {params.category}</h1>
                 <p id="cpDesc">{desc}</p>
-                <img id="cpImg" src={imgUrl} alt="Category Image" height={100} width={100} />
+                <img id="cpImg" src={imgUrl} alt="Category Image" height={125} width={125} />
                 <p id="cpPrompt">Ready to start?</p>
                 <div id="cpChoices">
                     <button id="yesChoice">Yes!</button>
-                    <button id="backChoice">Back</button>
+                    <Link to="/categories">
+                        <button id="backChoice">Back</button>
+                    </Link>
                 </div>
             </div>
         </div>
