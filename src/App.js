@@ -6,6 +6,7 @@ import Stats from './pages/stats';
 import Settings from './pages/settings';
 import Help from './pages/help';
 import Confirm from './pages/confirm';
+import Quiz from './pages/quiz';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route index element={<MainMenu />} />
         <Route path='categories' element={<Categories />} />
         <Route path='categories/:category/confirm' element={<Confirm />} />
+        <Route path='quiz/:category' element={<Quiz />} />
         <Route path='stats' element={<Stats />} />
         <Route path='settings' element={<Settings />} />
         <Route path='help' element={<Help />} />

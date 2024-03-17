@@ -60,7 +60,9 @@ function Confirm(){
                 <img id="cpImg" src={imgUrl} alt="Category Image" height={125} width={125} />
                 <p id="cpPrompt">Ready to start?</p>
                 <div id="cpChoices">
-                    <button id="yesChoice">Yes!</button>
+                    <Link to={"/quiz/" + params.category}>
+                        <button id="yesChoice">Yes!</button>
+                    </Link>
                     <Link to="/categories">
                         <button id="backChoice">Back</button>
                     </Link>
