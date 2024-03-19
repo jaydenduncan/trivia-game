@@ -12,9 +12,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Confirm(){
-    const [theme, setTheme] = useState("#ffffff");
-    const [desc, setDesc] = useState("");
-    const [imgUrl, setImgUrl] = useState("");
     let params = useParams();
     const pageInfo = {
         "General": ["#bebfb4", "These are general questions about everyday life.", 
@@ -30,11 +27,13 @@ function Confirm(){
         "Sports": ["#edf551", "These will be questions about different sports games and sports teams.", img_sports]
     };
 
+    const [desc, setDesc] = useState("");
+    const [imgUrl, setImgUrl] = useState("");
+
     function changeBgColor(){
-        setTheme(pageInfo[params.category][0]);
         if(document.getElementById("confirmPage")){
             let page = document.getElementById("confirmPage");
-            page.style.backgroundColor = theme;
+            page.style.backgroundColor = pageInfo[params.category][0];
         }
     }
 
@@ -50,7 +49,7 @@ function Confirm(){
         changeBgColor();
         changeDesc();
         changeImg();
-    })
+    });
 
     return (
         <div className="container">
