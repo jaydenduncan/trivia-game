@@ -8,6 +8,7 @@
     left:0;
     width: 100%;
     height: 100%;
+    overflow-y: auto;
     background-color: white;
     text-align: center;
     display: flex;
@@ -35,7 +36,7 @@
 
 #qpTimer p{
     font-family: "Merriweather Sans", sans-serif;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 #gameInfo{
@@ -58,7 +59,7 @@
 #questionBox{
     display: flex;
     align-items: center;
-    width: 35vw;
+    width: 50vw;
     min-height: 20vh;
     height: auto;
     background-color: white;
@@ -71,7 +72,7 @@
 #questionBox #question{
     font-family: "Merriweather Sans", sans-serif;
     font-weight: 300;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 #answerChoices{
@@ -79,7 +80,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 50vh;
-    width: 38vw;
+    width: 53vw;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -94,5 +95,86 @@
     border-radius: 5px;
     padding: 10px 0px;
     font-size: 20px;
+    line-height: 40px;
     cursor: pointer;
+}
+
+@media screen and (max-height: 800px) {
+    #qnHeading{
+        font-size: 17px;
+        margin-top: 12px;
+    }
+    #questionBox{
+        min-height: 15vh;
+    }
+    #questionBox #question{
+        font-size: 18px;
+    }
+    #answerChoices{
+        margin-top: 10px;
+    }
+    #answerChoices p{
+        font-size: 18px;
+        line-height: 30px;
+    }
+}
+
+@media screen and (min-height: 1000px) {
+    #qpTimer p{
+        font-size: 25px;
+    }
+    #gameInfo p{
+        font-size: 17px;
+    }
+    #questionBox #question{
+        font-size: 25px;
+    }
+    #answerChoices p{
+        font-size: 25px;
+        line-height: 50px;
+        padding: 15px 0;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #gameInfo p{
+        font-size: 12px;
+    }
+    #questionBox{
+        width: 60vw;
+        padding: 7px 18px;
+    }
+    #questionBox #question{
+        font-size: 22px;
+    }
+    #answerChoices{
+        width: 65vw;
+    }
+    #answerChoices p{
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #gameInfo p{
+        font-size: 10px;
+    }
+    #questionBox #question{
+        font-size: 17px;
+    }
+}
+
+@media screen and (min-width: 1050px) {
+    #qpTimer p{
+        font-size: 20px;
+    }
+    #gameInfo p{
+        font-size: 15px;
+    }
+    #questionBox #question{
+        font-size: 25px;
+    }
+    #answerChoices p{
+        font-size: 22px;
+    }
 }

@@ -18,7 +18,7 @@ function Quiz(){
     const questionSample = "Which of the following blood vessels carries deoxygenated blood?";
     const choicesSample = ["Aorta", "Pulmonary Artery", "Pulmonary Vein", "Coronary Artery"];
 
-    const [lives, setLives] = useState(0);
+    const [lives, setLives] = useState(3);
     const [points, setPoints] = useState(0);
     const [multiplier, setMultiplier] = useState(1);
     const [questionNum, setQuestionNum] = useState(1);
