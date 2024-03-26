@@ -20,18 +20,39 @@
     text-align: center;
 }
 
+#progressBar{
+    height: 8vh;
+    width: 80%;
+    margin: 0px auto;
+}
+
 #qpTimer{
     background-color: white;
     height: 3vh;
-    width: 75vw;
+    width: 97%;
     margin-top: 25px;
-    margin-left: auto;
     margin-right: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 5px 15px;
+    padding: 5px 20px;
     border-radius: 10px;
+    animation: progressbar-countdown;
+    animation-duration: 15s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-timing-function: linear;
+}
+@keyframes progressbar-countdown {
+    0% {
+        width: 97%;
+        background: #FFF;
+    }
+    100% {
+        width: 0%;
+        background: #FFF;
+    }
 }
 
 #qpTimer p{
@@ -58,6 +79,7 @@
 
 #questionBox{
     display: flex;
+    position: relative;
     align-items: center;
     width: 50vw;
     min-height: 20vh;
@@ -69,10 +91,20 @@
     overflow: auto;
 }
 
+#questionBox #difficulty{
+    font-family: "Merriweather Sans", sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+
 #questionBox #question{
     font-family: "Merriweather Sans", sans-serif;
     font-weight: 300;
     font-size: 22px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #answerChoices{
@@ -90,7 +122,8 @@
     font-family: "Merriweather Sans", sans-serif;
     font-weight: 300;
     background-color: white;
-    height: 5vh;
+    min-height: 5vh;
+    height: auto;
     width: 100%;
     border-radius: 5px;
     padding: 10px 0px;
