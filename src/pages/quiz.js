@@ -22,6 +22,8 @@ function Quiz(){
     const questionSample = "Which of the following blood vessels carries deoxygenated blood?";
     const choicesSample = ["Aorta", "Pulmonary Artery", "Pulmonary Vein", "Coronary Artery"];
 
+    const [roundStarted, setRoundStarted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [seconds, setSeconds] = useState(15);
     const [lives, setLives] = useState(3);
     const [points, setPoints] = useState(0);
@@ -45,26 +47,33 @@ function Quiz(){
         let catNum = themeList[params.category][1][randIdx];
         let catDifficulty = difficulty.toLowerCase();
 
-        fetch(`https://opentdb.com/api.php?amount=1&category=${catNum}&difficulty=${catDifficulty}&type=multiple`)
-        .then(response => response.json())
-        .then(data => {
-            if(data["response_code"] === 0){
-                let results = data["results"][0];
+        setRoundStarted(true);
+        setLoading(true);
 
-                // Assign question
-                setQuestion(results["question"]);
+        setTimeout(() => {
+            fetch(`https://opentdb.com/api.php?amount=1&category=${catNum}&difficulty=${catDifficulty}&type=multiple`)
+            .then(response => response.json())
+            .then(data => {
+                if(data["response_code"] === 0){
+                    let results = data["results"][0];
 
-                // Fill choices array with answer choices
-                setChoices([...results["incorrect_answers"], results["correct_answer"]]);
+                    // Assign question
+                    setQuestion(results["question"]);
 
-                // Set correct answer
-                setCorrectAns(results["correct_answer"]);
-            }
-            else{
-                chooseQuestion();
-            }
-        })
-        .catch(error => console.log("Got an error..." + error));
+                    // Fill choices array with answer choices
+                    setChoices([...results["incorrect_answers"], results["correct_answer"]]);
+
+                    // Set correct answer
+                    setCorrectAns(results["correct_answer"]);
+
+                    setLoading(false);
+                }
+                else if(data["response_code"] === 429){
+                    alert("ERROR: Failed to load a question");
+                }
+            })
+            .catch(error => console.error(error));
+        }, 5000);
     }
 
     function shuffle(arr){
@@ -82,33 +91,31 @@ function Quiz(){
     }
 
     useEffect(() => {
-        console.log("Rendering...");
         changeBgColor();
         chooseQuestion();
     }, []);
 
     useEffect(() => {
-        const timer = setTimeout(() => setSeconds(seconds-1), 1000);
-        if(seconds == 0) clearTimeout(timer);
-    }, [seconds]);
+        if(roundStarted && !loading){
+            let qpTimer = document.getElementById("qpTimer");
+            qpTimer.style.animationPlayState = "running";
+
+            const timer = setTimeout(() => setSeconds(seconds-1), 1000);
+            if(seconds == 0) clearTimeout(timer);
+        }
+    }, [seconds, loading]);
 
     useEffect(() => {
         if(questionNum < 10){
             setDifficulty(Level.EASY);
-            let difficultyEle = document.getElementById("difficulty");
-            difficultyEle.style.color = "#0eb31c";
         }
         else if((questionNum > 10) && (questionNum <= 25)){
             setDifficulty(Level.MEDIUM);
-            let difficultyEle = document.getElementById("difficulty");
-            difficultyEle.style.color = "#e89d1c";
         }
         else if(questionNum > 25){
             setDifficulty(Level.HARD);
-            let difficultyEle = document.getElementById("difficulty");
-            difficultyEle.style.color = "#eb0725";
         }
-    }, [questionNum]);
+    }, [questionNum, loading]);
 
     useEffect(() => {
         var questionEle = document.getElementById("question");
@@ -130,7 +137,16 @@ function Quiz(){
         choice4.innerHTML = choices[indices[3]];
     }, [choices]);
 
-    return (
+    return loading ?
+    (
+        <div className="container">
+            <div className="loader-wrapper">
+                <div className="loader"></div>
+            </div>
+        </div>
+    )
+    :
+    (
         <div className="container">
             <div id="quizPage">
                 <div id="progressBar">
@@ -145,7 +161,6 @@ function Quiz(){
                 </div>
                 <h2 id="qnHeading">Question {questionNum}</h2>
                 <div id="questionBox">
-                    <p id="difficulty">{difficulty}</p>
                     <p id="question"></p>
                 </div>
                 <div id="answerChoices">
