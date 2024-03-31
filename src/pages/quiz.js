@@ -22,6 +22,7 @@ function Quiz(){
     const questionSample = "Which of the following blood vessels carries deoxygenated blood?";
     const choicesSample = ["Aorta", "Pulmonary Artery", "Pulmonary Vein", "Coronary Artery"];
 
+    const [answered, setAnswered] = useState(false);
     const [roundStarted, setRoundStarted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [seconds, setSeconds] = useState(15);
@@ -47,6 +48,7 @@ function Quiz(){
         let catNum = themeList[params.category][1][randIdx];
         let catDifficulty = difficulty.toLowerCase();
 
+        setAnswered(false);
         setRoundStarted(true);
         setLoading(true);
 
@@ -68,8 +70,11 @@ function Quiz(){
 
                     setLoading(false);
                 }
-                else if(data["response_code"] === 429){
-                    alert("ERROR: Failed to load a question");
+                else{
+                    let again = window.confirm("Failed to load a question. Press 'OK' to try again.");
+
+                    if(again) chooseQuestion();
+                    else window.open("/categories");
                 }
             })
             .catch(error => console.error(error));
@@ -90,6 +95,69 @@ function Quiz(){
         return arr;
     }
 
+    function pointsToAdd(){
+        let total = 0;
+
+        switch(difficulty){
+            case Level.EASY:
+                total += 25;
+                break;
+            case Level.MEDIUM:
+                total += 75;
+                break;
+            case Level.HARD:
+                total += 150;
+                break;
+            default:
+                total += 25;
+        }
+
+        if(seconds > 5){
+            total += seconds * 2;
+        }
+
+        return total;
+    }
+
+    function findCorrectAnswerId(){
+        let answerChoices = document.getElementById("answerChoices");
+        
+        for(let child of answerChoices.children){
+            if(child.value === correctAns) return child.id;
+        }
+    }
+
+    function checkAnswer(e){
+        e.preventDefault();
+
+        // Stop the timer
+        setAnswered(true);
+
+        // Highlight correct answer and incorrect answer
+        let answerElement = document.getElementById(e.target.id);
+        let correctElementId = findCorrectAnswerId();
+        let correctElement = document.getElementById(correctElementId);
+        answerElement.style.color = (e.target.value === correctAns) ? "green" : "red";
+        if(e.target.value !== correctAns) correctElement.style.color = "green";
+
+        // Reward points for correct answer, deduct a life otherwise
+        if(e.target.value === correctAns){
+            let gainedPoints = pointsToAdd();
+
+            setPoints(points + gainedPoints);
+        }
+        else{
+            setLives(lives - 1);
+        }
+
+        // Restart round
+        setTimeout(() => {
+            setRoundStarted(false);
+            setSeconds(15);
+            setQuestionNum(questionNum + 1);
+        }, 2000);
+    }
+
     useEffect(() => {
         changeBgColor();
         chooseQuestion();
@@ -98,12 +166,13 @@ function Quiz(){
     useEffect(() => {
         if(roundStarted && !loading){
             let qpTimer = document.getElementById("qpTimer");
-            qpTimer.style.animationPlayState = "running";
+            if(!answered) qpTimer.style.animationPlayState = "running";
+            else if(answered) qpTimer.style.animationPlayState = "paused";
 
-            const timer = setTimeout(() => setSeconds(seconds-1), 1000);
-            if(seconds == 0) clearTimeout(timer);
+            const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
+            if(seconds == 0 || answered) clearTimeout(timer);
         }
-    }, [seconds, loading]);
+    }, [seconds, loading, answered]);
 
     useEffect(() => {
         if(questionNum < 10){
@@ -115,7 +184,9 @@ function Quiz(){
         else if(questionNum > 25){
             setDifficulty(Level.HARD);
         }
-    }, [questionNum, loading]);
+
+        if(questionNum > 1) chooseQuestion();
+    }, [questionNum]);
 
     useEffect(() => {
         var questionEle = document.getElementById("question");
@@ -130,6 +201,11 @@ function Quiz(){
 
         let indices = [0, 1, 2, 3];
         indices = [...shuffle(indices)];
+
+        choice1.value = choices[indices[0]];
+        choice2.value = choices[indices[1]];
+        choice3.value = choices[indices[2]];
+        choice4.value = choices[indices[3]];
         
         choice1.innerHTML = choices[indices[0]];
         choice2.innerHTML = choices[indices[1]];
@@ -164,10 +240,10 @@ function Quiz(){
                     <p id="question"></p>
                 </div>
                 <div id="answerChoices">
-                    <p id="choice1">{choices[0]}</p>
-                    <p id="choice2">{choices[1]}</p>
-                    <p id="choice3">{choices[2]}</p>
-                    <p id="choice4">{choices[3]}</p>
+                    <p id="choice1" onClick={checkAnswer}></p>
+                    <p id="choice2" onClick={checkAnswer}></p>
+                    <p id="choice3" onClick={checkAnswer}></p>
+                    <p id="choice4" onClick={checkAnswer}></p>
                 </div>
             </div>
         </div>
