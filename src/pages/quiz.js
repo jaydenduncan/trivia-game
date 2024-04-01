@@ -175,13 +175,13 @@ function Quiz(){
     }, [seconds, loading, answered]);
 
     useEffect(() => {
-        if(questionNum < 10){
+        if(questionNum <= 5){
             setDifficulty(Level.EASY);
         }
-        else if((questionNum > 10) && (questionNum <= 25)){
+        else if((questionNum > 5) && (questionNum <= 15)){
             setDifficulty(Level.MEDIUM);
         }
-        else if(questionNum > 25){
+        else if(questionNum > 15){
             setDifficulty(Level.HARD);
         }
 
@@ -240,10 +240,10 @@ function Quiz(){
                     <p id="question"></p>
                 </div>
                 <div id="answerChoices">
-                    <p id="choice1" onClick={checkAnswer}></p>
-                    <p id="choice2" onClick={checkAnswer}></p>
-                    <p id="choice3" onClick={checkAnswer}></p>
-                    <p id="choice4" onClick={checkAnswer}></p>
+                    <p id="choice1" onClick={!answered ? checkAnswer : () => {return;}}></p>
+                    <p id="choice2" onClick={!answered ? checkAnswer : () => {return;}}></p>
+                    <p id="choice3" onClick={!answered ? checkAnswer : () => {return;}}></p>
+                    <p id="choice4" onClick={!answered ? checkAnswer : () => {return;}}></p>
                 </div>
             </div>
         </div>
