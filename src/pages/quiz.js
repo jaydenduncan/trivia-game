@@ -28,6 +28,7 @@ function Quiz(){
     const [seconds, setSeconds] = useState(15);
     const [lives, setLives] = useState(3);
     const [points, setPoints] = useState(0);
+    const [streak, setStreak] = useState(0);
     const [multiplier, setMultiplier] = useState(1);
     const [questionNum, setQuestionNum] = useState(1);
     const [difficulty, setDifficulty] = useState(Level.EASY);
@@ -97,6 +98,7 @@ function Quiz(){
 
     function pointsToAdd(){
         let total = 0;
+        let bonus = 0;
 
         switch(difficulty){
             case Level.EASY:
@@ -108,15 +110,13 @@ function Quiz(){
             case Level.HARD:
                 total += 150;
                 break;
-            default:
-                total += 25;
         }
 
         if(seconds > 5){
-            total += seconds * 2;
+            bonus += seconds * 2;
         }
 
-        return total;
+        return (total * multiplier) + bonus;
     }
 
     function findCorrectAnswerId(){
@@ -143,11 +143,12 @@ function Quiz(){
         // Reward points for correct answer, deduct a life otherwise
         if(e.target.value === correctAns){
             let gainedPoints = pointsToAdd();
-
             setPoints(points + gainedPoints);
+            setStreak(streak + 1);
         }
         else{
             setLives(lives - 1);
+            setStreak(0);
         }
 
         // Restart round
@@ -192,6 +193,13 @@ function Quiz(){
         var questionEle = document.getElementById("question");
         questionEle.innerHTML = question;
     }, [question]);
+
+    // Set multiplier based on streak
+    useEffect(() => {
+        if(streak === 0) setMultiplier(1);
+        else if(streak === 5) setMultiplier(2);
+        else if(streak === 10) setMultiplier(3);
+    }, [streak]);
 
     useEffect(() => {
         var choice1 = document.getElementById("choice1");
