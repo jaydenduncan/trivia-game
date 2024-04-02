@@ -128,27 +128,44 @@ function Quiz(){
     }
 
     function checkAnswer(e){
-        e.preventDefault();
+        if(!e){
+            setRoundStarted(false);
 
-        // Stop the timer
-        setAnswered(true);
+            // Disable answer buttons
+            setAnswered(true);
 
-        // Highlight correct answer and incorrect answer
-        let answerElement = document.getElementById(e.target.id);
-        let correctElementId = findCorrectAnswerId();
-        let correctElement = document.getElementById(correctElementId);
-        answerElement.style.color = (e.target.value === correctAns) ? "green" : "red";
-        if(e.target.value !== correctAns) correctElement.style.color = "green";
+            // Highlight correct answer
+            let correctElementId = findCorrectAnswerId();
+            let correctElement = document.getElementById(correctElementId);
+            correctElement.style.color = "green";
 
-        // Reward points for correct answer, deduct a life otherwise
-        if(e.target.value === correctAns){
-            let gainedPoints = pointsToAdd();
-            setPoints(points + gainedPoints);
-            setStreak(streak + 1);
-        }
-        else{
+            // Take away life, reset streak
             setLives(lives - 1);
             setStreak(0);
+        }
+        else{
+            e.preventDefault();
+
+            // Stop the timer, disable answer buttons
+            setAnswered(true);
+
+            // Highlight correct answer and incorrect answer
+            let answerElement = document.getElementById(e.target.id);
+            let correctElementId = findCorrectAnswerId();
+            let correctElement = document.getElementById(correctElementId);
+            answerElement.style.color = (e.target.value === correctAns) ? "green" : "red";
+            if(e.target.value !== correctAns) correctElement.style.color = "green";
+
+            // Reward points for correct answer, deduct a life otherwise
+            if(e.target.value === correctAns){
+                let gainedPoints = pointsToAdd();
+                setPoints(points + gainedPoints);
+                setStreak(streak + 1);
+            }
+            else{
+                setLives(lives - 1);
+                setStreak(0);
+            }
         }
 
         // Restart round
@@ -168,10 +185,17 @@ function Quiz(){
         if(roundStarted && !loading){
             let qpTimer = document.getElementById("qpTimer");
             if(!answered) qpTimer.style.animationPlayState = "running";
-            else if(answered) qpTimer.style.animationPlayState = "paused";
+            else if(answered){
+                console.log("Pausing timer...");
+                qpTimer.style.animationPlayState = "paused";
+            }
 
             const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
-            if(seconds == 0 || answered) clearTimeout(timer);
+            if(seconds === 0 || answered){
+                console.log("Stopping seconds...");
+                clearTimeout(timer);
+            }
+            if(seconds === 0) checkAnswer();
         }
     }, [seconds, loading, answered]);
 
