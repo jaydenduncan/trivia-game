@@ -75,7 +75,7 @@ function Quiz(){
                     let again = window.confirm("Failed to load a question. Press 'OK' to try again.");
 
                     if(again) chooseQuestion();
-                    else window.open("/categories");
+                    else window.location = "/categories";
                 }
             })
             .catch(error => console.error(error));
@@ -185,16 +185,10 @@ function Quiz(){
         if(roundStarted && !loading){
             let qpTimer = document.getElementById("qpTimer");
             if(!answered) qpTimer.style.animationPlayState = "running";
-            else if(answered){
-                console.log("Pausing timer...");
-                qpTimer.style.animationPlayState = "paused";
-            }
+            else if(answered) qpTimer.style.animationPlayState = "paused";
 
             const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
-            if(seconds === 0 || answered){
-                console.log("Stopping seconds...");
-                clearTimeout(timer);
-            }
+            if(seconds === 0 || answered) clearTimeout(timer);
             if(seconds === 0) checkAnswer();
         }
     }, [seconds, loading, answered]);
@@ -224,6 +218,16 @@ function Quiz(){
         else if(streak === 5) setMultiplier(2);
         else if(streak === 10) setMultiplier(3);
     }, [streak]);
+
+    // End game after all 3 lives are lost
+    useEffect(() => {
+        if(lives === 0){
+            setTimeout(() => {
+                alert("GAME OVER" + "\n" + "Total Points: " + points);
+                window.location = "/categories";
+            }, 2000);
+        }
+    }, [lives]);
 
     useEffect(() => {
         var choice1 = document.getElementById("choice1");
