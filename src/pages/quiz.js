@@ -19,8 +19,6 @@ function Quiz(){
         MEDIUM: "Medium",
         HARD: "Hard"
     };
-    const questionSample = "Which of the following blood vessels carries deoxygenated blood?";
-    const choicesSample = ["Aorta", "Pulmonary Artery", "Pulmonary Vein", "Coronary Artery"];
 
     const [answered, setAnswered] = useState(false);
     const [roundStarted, setRoundStarted] = useState(false);
@@ -32,6 +30,10 @@ function Quiz(){
     const [multiplier, setMultiplier] = useState(1);
     const [questionNum, setQuestionNum] = useState(1);
     const [difficulty, setDifficulty] = useState(Level.EASY);
+    const [easyBank, setEasyBank] = useState([]);
+    const [mediumBank, setMediumBank] = useState([]);
+    const [hardBank, setHardBank] = useState([]);
+    const [questionIdx, setQuestionIdx] = useState(-1);
     const [question, setQuestion] = useState("");
     const [correctAns, setCorrectAns] = useState("");
     const [choices, setChoices] = useState([]);
@@ -43,43 +45,84 @@ function Quiz(){
         }
     }
 
-    function chooseQuestion(){
+    function fillEasyBank(){
         let maxIdx = themeList[params.category][1].length;
         let randIdx = Math.floor(Math.random() * maxIdx);
         let catNum = themeList[params.category][1][randIdx];
-        let catDifficulty = difficulty.toLowerCase();
-
-        setAnswered(false);
-        setRoundStarted(true);
+        
         setLoading(true);
 
+        // Fill easy question bank
         setTimeout(() => {
-            fetch(`https://opentdb.com/api.php?amount=1&category=${catNum}&difficulty=${catDifficulty}&type=multiple`)
+            fetch(`https://opentdb.com/api.php?amount=5&category=${catNum}&difficulty=easy&type=multiple`)
             .then(response => response.json())
             .then(data => {
                 if(data["response_code"] === 0){
-                    let results = data["results"][0];
-
-                    // Assign question
-                    setQuestion(results["question"]);
-
-                    // Fill choices array with answer choices
-                    setChoices([...results["incorrect_answers"], results["correct_answer"]]);
-
-                    // Set correct answer
-                    setCorrectAns(results["correct_answer"]);
-
-                    setLoading(false);
+                    setEasyBank(data["results"]);
                 }
                 else{
-                    let again = window.confirm("Failed to load a question. Press 'OK' to try again.");
-
-                    if(again) chooseQuestion();
-                    else window.location = "/categories";
+                    alert("ERROR: Failed to fill easy question bank");
+                    window.location = "/categories";
                 }
+
+                setLoading(false);
             })
             .catch(error => console.error(error));
-        }, 5000);
+        }, 1000);
+    }
+
+    function fillMediumBank(amount, strikes){
+        let maxIdx = themeList[params.category][1].length;
+        let randIdx = Math.floor(Math.random() * maxIdx);
+        let catNum = themeList[params.category][1][randIdx];
+
+        setLoading(true);
+
+        // Fill medium question bank
+        fetch(`https://opentdb.com/api.php?amount=${amount}&category=${catNum}&difficulty=medium&type=multiple`)
+        .then(response => response.json())
+        .then(data => {
+            if(data["response_code"] === 0){
+                setMediumBank(data["results"]);
+            }
+            else{
+                if(strikes === 0){
+                    alert(`ERROR: Failed to fill medium question bank with ${amount} questions`);
+                    window.location = "/categories";
+                }
+                else{
+                    fillMediumBank((amount > 5) ? amount-5 : 5, strikes-1);
+                }
+            }
+        })
+        .catch(error => console.error(error));
+    }
+
+    function fillHardBank(amount, strikes){
+        let maxIdx = themeList[params.category][1].length;
+        let randIdx = Math.floor(Math.random() * maxIdx);
+        let catNum = themeList[params.category][1][randIdx];
+
+        setLoading(true);
+
+        // Fill hard question bank
+        fetch(`https://opentdb.com/api.php?amount=10&category=${catNum}&difficulty=hard&type=multiple`)
+        .then(response => response.json())
+        .then(data => {
+            if(data["response_code"] === 0){
+                setHardBank(data["results"]);
+            }
+            else{
+                if(strikes === 0){
+                    alert(`ERROR: Failed to fill hard question bank with ${amount} questions`);
+                    window.location = "/categories";
+                }
+                else{
+                    fillMediumBank((amount > 5) ? amount-5 : 5, strikes-1);
+                }
+            }
+        })
+        .catch(error => console.error(error));
     }
 
     function shuffle(arr){
@@ -178,7 +221,7 @@ function Quiz(){
 
     useEffect(() => {
         changeBgColor();
-        chooseQuestion();
+        fillEasyBank();
     }, []);
 
     useEffect(() => {
@@ -194,18 +237,63 @@ function Quiz(){
     }, [seconds, loading, answered]);
 
     useEffect(() => {
-        if(questionNum <= 5){
-            setDifficulty(Level.EASY);
-        }
-        else if((questionNum > 5) && (questionNum <= 15)){
+        if(questionNum === 6){
             setDifficulty(Level.MEDIUM);
+            fillMediumBank(10);
         }
-        else if(questionNum > 15){
+        else if(questionNum === 16){
             setDifficulty(Level.HARD);
+            fillHardBank(35);
         }
 
-        if(questionNum > 1) chooseQuestion();
+        setQuestionIdx((questionNum === 6 || questionNum === 16) ? 0 : questionIdx+1);
     }, [questionNum]);
+
+    useEffect(() => {
+        if(easyBank.length !== 0 || mediumBank.length !== 0 || hardBank.length !== 0){
+            setAnswered(false);
+            setRoundStarted(true);
+            setLoading(true);
+
+            console.log(difficulty);
+            console.log(questionIdx);
+
+            setTimeout(() => {
+                if(difficulty === Level.EASY && easyBank.length > 0){
+                    let questionInfo = easyBank[questionIdx];
+
+                    // Assign question
+                    setQuestion(questionInfo["question"]);
+
+                    // Fill choices array with answer choices
+                    setChoices([...questionInfo["incorrect_answers"], questionInfo["correct_answer"]]);
+
+                    // Set correct answer
+                    setCorrectAns(questionInfo["correct_answer"]);
+                }
+                else if(difficulty === Level.MEDIUM && mediumBank.length > 0){
+                    let questionInfo = mediumBank[questionIdx];
+
+                    setQuestion(questionInfo["question"]);
+
+                    setChoices([...questionInfo["incorrect_answers"], questionInfo["correct_answer"]]);
+
+                    setCorrectAns(questionInfo["correct_answer"]);
+                }
+                else if(difficulty === Level.HARD && hardBank.length > 0){
+                    let questionInfo = hardBank[questionIdx];
+
+                    setQuestion(questionInfo["question"]);
+
+                    setChoices([...questionInfo["incorrect_answers"], questionInfo["correct_answer"]]);
+
+                    setCorrectAns(questionInfo["correct_answer"]);
+                }
+
+                setLoading(false);
+            }, 2000);
+        }
+    }, [easyBank, mediumBank, hardBank, questionIdx]);
 
     useEffect(() => {
         var questionEle = document.getElementById("question");
