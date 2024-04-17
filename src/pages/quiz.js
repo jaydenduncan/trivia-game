@@ -71,7 +71,7 @@ function Quiz(){
         }, 1000);
     }
 
-    function fillMediumBank(amount, strikes){
+    function fillMediumBank(){
         let maxIdx = themeList[params.category][1].length;
         let randIdx = Math.floor(Math.random() * maxIdx);
         let catNum = themeList[params.category][1][randIdx];
@@ -79,26 +79,21 @@ function Quiz(){
         setLoading(true);
 
         // Fill medium question bank
-        fetch(`https://opentdb.com/api.php?amount=${amount}&category=${catNum}&difficulty=medium&type=multiple`)
+        fetch(`https://opentdb.com/api.php?amount=5&category=${catNum}&difficulty=medium&type=multiple`)
         .then(response => response.json())
         .then(data => {
             if(data["response_code"] === 0){
                 setMediumBank(data["results"]);
             }
             else{
-                if(strikes === 0){
-                    alert(`ERROR: Failed to fill medium question bank with ${amount} questions`);
-                    window.location = "/categories";
-                }
-                else{
-                    fillMediumBank((amount > 5) ? amount-5 : 5, strikes-1);
-                }
+                alert(`ERROR: Failed to fill medium question bank`);
+                window.location = "/categories";
             }
         })
         .catch(error => console.error(error));
     }
 
-    function fillHardBank(amount, strikes){
+    function fillHardBank(){
         let maxIdx = themeList[params.category][1].length;
         let randIdx = Math.floor(Math.random() * maxIdx);
         let catNum = themeList[params.category][1][randIdx];
@@ -106,20 +101,15 @@ function Quiz(){
         setLoading(true);
 
         // Fill hard question bank
-        fetch(`https://opentdb.com/api.php?amount=10&category=${catNum}&difficulty=hard&type=multiple`)
+        fetch(`https://opentdb.com/api.php?amount=5&category=${catNum}&difficulty=hard&type=multiple`)
         .then(response => response.json())
         .then(data => {
             if(data["response_code"] === 0){
                 setHardBank(data["results"]);
             }
             else{
-                if(strikes === 0){
-                    alert(`ERROR: Failed to fill hard question bank with ${amount} questions`);
-                    window.location = "/categories";
-                }
-                else{
-                    fillMediumBank((amount > 5) ? amount-5 : 5, strikes-1);
-                }
+                alert(`ERROR: Failed to fill hard question bank`);
+                window.location = "/categories";
             }
         })
         .catch(error => console.error(error));
@@ -237,16 +227,17 @@ function Quiz(){
     }, [seconds, loading, answered]);
 
     useEffect(() => {
+        // Switch difficulty based on question number
         if(questionNum === 6){
             setDifficulty(Level.MEDIUM);
-            fillMediumBank(10);
+            fillMediumBank();
         }
-        else if(questionNum === 16){
+        else if(questionNum === 11){
             setDifficulty(Level.HARD);
-            fillHardBank(35);
+            fillHardBank();
         }
 
-        setQuestionIdx((questionNum === 6 || questionNum === 16) ? 0 : questionIdx+1);
+        setQuestionIdx((questionNum === 6 || questionNum === 11) ? 0 : questionIdx+1);
     }, [questionNum]);
 
     useEffect(() => {
@@ -254,12 +245,9 @@ function Quiz(){
             setAnswered(false);
             setRoundStarted(true);
             setLoading(true);
-
-            console.log(difficulty);
-            console.log(questionIdx);
-
+            
             setTimeout(() => {
-                if(difficulty === Level.EASY && easyBank.length > 0){
+                if(difficulty === Level.EASY && easyBank.length > 0 && questionIdx < easyBank.length){
                     let questionInfo = easyBank[questionIdx];
 
                     // Assign question
@@ -271,7 +259,7 @@ function Quiz(){
                     // Set correct answer
                     setCorrectAns(questionInfo["correct_answer"]);
                 }
-                else if(difficulty === Level.MEDIUM && mediumBank.length > 0){
+                else if(difficulty === Level.MEDIUM && mediumBank.length > 0 && questionIdx < mediumBank.length){
                     let questionInfo = mediumBank[questionIdx];
 
                     setQuestion(questionInfo["question"]);
@@ -280,7 +268,7 @@ function Quiz(){
 
                     setCorrectAns(questionInfo["correct_answer"]);
                 }
-                else if(difficulty === Level.HARD && hardBank.length > 0){
+                else if(difficulty === Level.HARD && hardBank.length > 0 && questionIdx < hardBank.length){
                     let questionInfo = hardBank[questionIdx];
 
                     setQuestion(questionInfo["question"]);
@@ -288,6 +276,13 @@ function Quiz(){
                     setChoices([...questionInfo["incorrect_answers"], questionInfo["correct_answer"]]);
 
                     setCorrectAns(questionInfo["correct_answer"]);
+                }
+                else if(questionIdx > 0 && questionIdx >= hardBank.length){
+                    // Reset index to 0 and refill respective question bank if index out of range
+                    if(difficulty === Level.HARD){
+                        fillHardBank();
+                        setQuestionIdx(0);
+                    }
                 }
 
                 setLoading(false);
