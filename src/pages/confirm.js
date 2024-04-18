@@ -12,7 +12,9 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Confirm(){
-    let params = useParams();
+    let params = useParams(); // component parameters
+
+    // Store page information for each category (background color, description, theme image)
     const pageInfo = {
         "General": ["#bebfb4", "These are general questions about everyday life.", 
                     img_general],

@@ -14,9 +14,8 @@ import { faFootball } from "@fortawesome/free-solid-svg-icons";
 
 function Categories(){
     function togglePopup(){
-        console.log("hello");
         let catInfo = document.getElementById("infoPopup");
-    
+        
         catInfo.style.visibility = (catInfo.style.visibility === "hidden") ? "visible" : "hidden";
     }
 

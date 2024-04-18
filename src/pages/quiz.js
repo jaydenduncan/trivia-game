@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 function Quiz(){
-    let params = useParams();
+    let params = useParams(); // grab component parameters
+
+    // Store info for each category (background color, api category numbers)
     let themeList = {
         "General": ["#bebfb4", [9]],
         "Art": ["#ed1c20", [25]],
@@ -14,6 +16,8 @@ function Quiz(){
         "Math": ["#45f7da", [19]],
         "Sports": ["#edf551", [21]]
     };
+
+    // Question levels
     const Level = {
         EASY: "Easy",
         MEDIUM: "Medium",
@@ -46,11 +50,12 @@ function Quiz(){
     }
 
     function fillEasyBank(){
+        // Pick random category number
         let maxIdx = themeList[params.category][1].length;
         let randIdx = Math.floor(Math.random() * maxIdx);
         let catNum = themeList[params.category][1][randIdx];
         
-        setLoading(true);
+        setLoading(true); // Keep loading screen running
 
         // Fill easy question bank
         setTimeout(() => {
@@ -115,6 +120,7 @@ function Quiz(){
         .catch(error => console.error(error));
     }
 
+    // Fisher-Yates shuffle algorithm (for shuffling answer choices)
     function shuffle(arr){
         let currIdx = arr.length;
         let randIdx;
@@ -133,6 +139,7 @@ function Quiz(){
         let total = 0;
         let bonus = 0;
 
+        // Append points based off question difficulty
         switch(difficulty){
             case Level.EASY:
                 total += 25;
@@ -145,10 +152,12 @@ function Quiz(){
                 break;
         }
 
+        // Add bonus for amount of seconds left on clock (if greater than 5 seconds)
         if(seconds > 5){
             bonus += seconds * 2;
         }
 
+        // Return grand total points
         return (total * multiplier) + bonus;
     }
 
@@ -162,7 +171,7 @@ function Quiz(){
 
     function checkAnswer(e){
         if(!e){
-            setRoundStarted(false);
+            setRoundStarted(false); // end round
 
             // Disable answer buttons
             setAnswered(true);
@@ -179,7 +188,7 @@ function Quiz(){
         else{
             e.preventDefault();
 
-            // Stop the timer, disable answer buttons
+            // Stop the timer, disable answer choice buttons
             setAnswered(true);
 
             // Highlight correct answer and incorrect answer
@@ -209,18 +218,22 @@ function Quiz(){
         }, 2000);
     }
 
+    // Component constructor
     useEffect(() => {
         changeBgColor();
-        fillEasyBank();
+        fillEasyBank(); // start by filling up easy question bank
     }, []);
 
     useEffect(() => {
+        // Start timer when the round starts and the question is done loading
         if(roundStarted && !loading){
             let qpTimer = document.getElementById("qpTimer");
             if(!answered) qpTimer.style.animationPlayState = "running";
-            else if(answered) qpTimer.style.animationPlayState = "paused";
+            else if(answered) qpTimer.style.animationPlayState = "paused"; // stop timer when user answers
 
             const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
+
+            // Stop timer and check answer when user runs out of time
             if(seconds === 0 || answered) clearTimeout(timer);
             if(seconds === 0) checkAnswer();
         }
@@ -237,14 +250,16 @@ function Quiz(){
             fillHardBank();
         }
 
+        // Reset question index to 0 if new difficulty has begun, otherwise increment index by 1
         setQuestionIdx((questionNum === 6 || questionNum === 11) ? 0 : questionIdx+1);
     }, [questionNum]);
 
     useEffect(() => {
+        // Set up question screen if either bank is not empty
         if(easyBank.length !== 0 || mediumBank.length !== 0 || hardBank.length !== 0){
-            setAnswered(false);
-            setRoundStarted(true);
-            setLoading(true);
+            setAnswered(false); // reenable answer choices
+            setRoundStarted(true); // start round
+            setLoading(true); // display loading screen
             
             setTimeout(() => {
                 if(difficulty === Level.EASY && easyBank.length > 0 && questionIdx < easyBank.length){
@@ -278,19 +293,20 @@ function Quiz(){
                     setCorrectAns(questionInfo["correct_answer"]);
                 }
                 else if(questionIdx > 0 && questionIdx >= hardBank.length){
-                    // Reset index to 0 and refill respective question bank if index out of range
+                    // Reset index to 0 and refill hard question bank if index out of range (continue game loop)
                     if(difficulty === Level.HARD){
                         fillHardBank();
                         setQuestionIdx(0);
                     }
                 }
 
-                setLoading(false);
+                setLoading(false); // End loading screen
             }, 2000);
         }
     }, [easyBank, mediumBank, hardBank, questionIdx]);
 
     useEffect(() => {
+        // Display question on screen
         var questionEle = document.getElementById("question");
         questionEle.innerHTML = question;
     }, [question]);
@@ -312,6 +328,7 @@ function Quiz(){
         }
     }, [lives]);
 
+    // Shuffle and display answer choices
     useEffect(() => {
         var choice1 = document.getElementById("choice1");
         var choice2 = document.getElementById("choice2");
