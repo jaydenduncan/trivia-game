@@ -3,3 +3,75 @@
 .statsPage h1{
     text-align: center;
 }
+
+.categoryStats{
+    position: relative;
+}
+
+.categoryStats .cs{
+    width: 50%;
+    height: 50%;
+    border: 3px solid black;
+    margin: 25px auto;
+}
+
+.categoryStats .cs p{
+    margin-left: 10px;
+    padding-top: 0;
+}
+
+.categoryStats .cs header{
+    text-align: center;
+}
+
+.generalHeader{
+    background-color: #bebfb4;
+}
+
+.artHeader{
+    background-color: #ed1c20;
+}
+
+.scienceHeader{
+    background-color: #0cc92c;
+}
+
+.geographyHeader{
+    background-color: #1092e3;
+}
+
+.historyHeader{
+    background-color: #ed9d13;
+}
+
+.entertainmentHeader{
+    background-color: #c623db;
+}
+
+.mathHeader{
+    background-color: #45f7da;
+}
+
+.sportsHeader{
+    background-color: #edf551;
+}
+
+.categoryStats .cs header h4{
+    margin: 0;
+    padding: 20px;
+}
+
+.headerSep{
+    margin-top: 0;
+    height: 2px;
+    background-color: #000;
+}
+
+.statsSec{
+    display: flex;
+    justify-content: space-between;
+}
+
+.statsNum{
+    margin-right: 10px;
+}
