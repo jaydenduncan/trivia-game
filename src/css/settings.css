@@ -17,7 +17,7 @@
     padding: 10px;
 }
 
-.difficultyOptions{
+.setOpts{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -26,14 +26,41 @@
     margin-bottom: 25px;
 }
 
-.difficultyOptions div{
+.setOpts div{
     width: 100%;
+    cursor: pointer;
 }
 
-.difficultyOptions p{
+.setOpts p{
     text-align: center;
+}
+
+.difficultyOptions .easyOption{
+    color: #13ed4a;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 .difficultyOptions .normalOption{
     border: 1px solid black;
+    background-color: #969292;
+    color: #f5f51d;
+}
+
+.difficultyOptions .hardOption{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: #fc1a0a;
+}
+
+.gameSpeedOptions .mediumOption{
+    border: 1px solid black;
+    background-color: #969292;
+}
+
+.themeOptions .lightOption{
+    border-right: 1px solid black;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #969292;
 }
