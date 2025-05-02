@@ -1,11 +1,19 @@
 import "../css/settings.css";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Settings(){
     return (
         <div className="container">
             <div className="settingsPage">
+                <Link to="/">
+                    <div className="backBtn">
+                        <FontAwesomeIcon id="backBtnLeftArrowIcon" icon={faChevronLeft} />
+                        <p>Back</p>
+                    </div>
+                </Link>
                 <h1>Settings</h1>
-
                 <div className="settingsDiv">
                     <div className="difficulty">
                         <h4 className="difficultyLabel">Difficulty</h4>

@@ -1,11 +1,19 @@
 import "../css/stats.css";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Stats(){
     return (
         <div className="container">
             <div className="statsPage">
+                <Link to="/">
+                    <div className="backBtn">
+                        <FontAwesomeIcon id="backBtnLeftArrowIcon" icon={faChevronLeft} />
+                        <p>Back</p>
+                    </div>
+                </Link>
                 <h1>Stats</h1>
-
                 <div className="categoryStats">
                     <div className="cs generalStats">
                         <header className="generalHeader">
