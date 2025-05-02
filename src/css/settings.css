@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+.container{
+    font-family: "Merriweather Sans", sans-serif;
+}
+
 .settingsPage{
     position: relative;
 }
@@ -42,7 +46,8 @@
 }
 
 .difficultyOptions .normalOption{
-    border: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     background-color: #969292;
     color: #f5f51d;
 }
@@ -54,7 +59,8 @@
 }
 
 .gameSpeedOptions .mediumOption{
-    border: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     background-color: #969292;
 }
 
