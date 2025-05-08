@@ -1,9 +1,23 @@
 import "../css/settings.css";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Settings(){
+    const [settings, setSettings] = useState();
+
+    const initializeSettings = async () => {
+        await fetch("/settings")
+        .then(res => res.json())
+        .then(data => setSettings(data[0]))
+        .catch(err => console.log(err));
+    };
+
+    useEffect(() => {
+        initializeSettings();
+    }, []);
+
     return (
         <div className="container">
             <div className="settingsPage">
