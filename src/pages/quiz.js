@@ -27,7 +27,9 @@ function Quiz(){
     const [answered, setAnswered] = useState(false);
     const [roundStarted, setRoundStarted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [seconds, setSeconds] = useState(15);
+    const [duration, setDuration] = useState('0s');
+    const [initialSeconds, setInitialSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(0);
     const [lives, setLives] = useState(3);
     const [points, setPoints] = useState(0);
     const [streak, setStreak] = useState(0);
@@ -54,6 +56,7 @@ function Quiz(){
         .then(res => res.json())
         .then(data => {
             let initialLives;
+            let initialSeconds;
 
             switch(data[0].difficulty){
                 case "EASY":
@@ -67,7 +70,22 @@ function Quiz(){
                     break;
             }
 
+            switch(data[0].game_speed){
+                case "10":
+                    initialSeconds = 10;
+                    break;
+                case "15":
+                    initialSeconds = 15;
+                    break;
+                case "20":
+                    initialSeconds = 20;
+                    break;
+            }
+
             setLives(initialLives);
+            setDuration(`${initialSeconds}s`);
+            setSeconds(initialSeconds);
+            setInitialSeconds(initialSeconds);
         })
         .catch(err => console.log(err));
     }
@@ -95,7 +113,11 @@ function Quiz(){
 
                 setLoading(false);
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                alert(`ERROR: Failed to fill easy question bank`);
+                window.location = "/categories";
+            });
         }, 1000);
     }
 
@@ -118,7 +140,11 @@ function Quiz(){
                 window.location = "/categories";
             }
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            console.error(error);
+            alert(`ERROR: Failed to fill medium question bank`);
+            window.location = "/categories";
+        });
     }
 
     function fillHardBank(){
@@ -140,7 +166,11 @@ function Quiz(){
                 window.location = "/categories";
             }
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            console.error(error);
+            alert(`ERROR: Failed to fill hard question bank`);
+            window.location = "/categories";
+        });
     }
 
     // Fisher-Yates shuffle algorithm (for shuffling answer choices)
@@ -236,15 +266,15 @@ function Quiz(){
         // Restart round
         setTimeout(() => {
             setRoundStarted(false);
-            setSeconds(15);
+            setSeconds(initialSeconds);
             setQuestionNum(questionNum + 1);
         }, 2000);
     }
 
     // Component constructor
     useEffect(() => {
-        changeBgColor();
         initialize();
+        changeBgColor();
         fillEasyBank(); // start by filling up easy question bank
     }, []);
 
@@ -386,7 +416,7 @@ function Quiz(){
         <div className="container">
             <div id="quizPage">
                 <div id="progressBar">
-                    <div id="qpTimer">
+                    <div id="qpTimer" style={{animationDuration: duration}}>
                         <p id="qpTimerSecond">{seconds}</p>
                     </div>
                 </div>
