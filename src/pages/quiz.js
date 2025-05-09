@@ -49,6 +49,29 @@ function Quiz(){
         }
     }
 
+    async function initialize(){
+        await fetch('/settings')
+        .then(res => res.json())
+        .then(data => {
+            let initialLives;
+
+            switch(data[0].difficulty){
+                case "EASY":
+                    initialLives = 5;
+                    break;
+                case "NORMAL":
+                    initialLives = 3;
+                    break;
+                case "HARD":
+                    initialLives = 1;
+                    break;
+            }
+
+            setLives(initialLives);
+        })
+        .catch(err => console.log(err));
+    }
+
     function fillEasyBank(){
         // Pick random category number
         let maxIdx = themeList[params.category][1].length;
@@ -221,6 +244,7 @@ function Quiz(){
     // Component constructor
     useEffect(() => {
         changeBgColor();
+        initialize();
         fillEasyBank(); // start by filling up easy question bank
     }, []);
 
