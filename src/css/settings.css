@@ -2,6 +2,7 @@
 
 .container{
     font-family: "Merriweather Sans", sans-serif;
+    min-height: 100vh;
 }
 
 .settingsPage{
@@ -19,28 +20,49 @@
     width: 8vw;
 }
 
-.settingsPage .backBtn:hover{
-    color:#5e5e5b;
+.settingsPage .backBtn p{
+    color: var(--primary-text-color);
+}
+
+.settingsPage .backBtn p:hover{
+    color: #5e5e5b;
+}
+
+#backBtnLeftArrowIcon{
+    color: var(--primary-backbtn-color);
 }
 
 .settingsPage h1{
     text-align: center;
+    color: var(--primary-text-color);
 }
 
 .settingsDiv{
     height: 50%;
     width: 50%;
-    border: 2px solid black;
+    border: 2px solid var(--primary-border-color);
     border-radius: 15px;
     margin: 25px auto;
     padding: 10px;
+}
+
+.settingsDiv h4{
+    color: var(--primary-text-color);
+}
+
+.gameSpeed p{
+    color: var(--primary-text-color);
+}
+
+.theme p{
+    color: var(--primary-text-color);
 }
 
 .setOpts{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid var(--primary-border-color);
     border-radius: 20px;
     margin-bottom: 25px;
 }
@@ -61,8 +83,8 @@
 }
 
 .difficultyOptions .normalOption{
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid var(--primary-border-color);
+    border-right: 1px solid var(--primary-border-color);
     color: #f5f51d;
 }
 
@@ -83,12 +105,12 @@
 }
 
 .gameSpeedOptions .mediumOption{
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid var(--primary-border-color);
+    border-right: 1px solid var(--primary-border-color);
 }
 
 .themeOptions .lightOption{
-    border-right: 1px solid black;
+    border-right: 1px solid var(--primary-border-color);
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }

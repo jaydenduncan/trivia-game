@@ -131,6 +131,9 @@ function Settings(){
         .then(res => res)
         .then(data => initializeSettings())
         .catch(err => console.log(err));
+
+        // Reflect changes in app
+        document.querySelector('body').setAttribute('data-theme', theme);
     }
 
     useEffect(() => {

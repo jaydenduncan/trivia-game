@@ -1,4 +1,5 @@
 import './App.css';
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainMenu from './pages/mainmenu';
 import Categories from './pages/categories';
@@ -9,6 +10,27 @@ import Confirm from './pages/confirm';
 import Quiz from './pages/quiz';
 
 function App() {
+  const [theme, setTheme] = useState("");
+  
+  const initializeTheme = async () => {
+      await fetch("/settings")
+      .then(res => res.json())
+      .then(data => setTheme(data[0].theme))
+      .catch(err => console.log(err));
+  };
+
+  const changeTheme = () => {
+      document.querySelector('body').setAttribute('data-theme', theme);
+  }
+
+  useEffect(() => {
+      initializeTheme();
+  }, []);
+
+  useEffect(() => {
+      changeTheme();
+  }, [theme]);
+
   return (
     <BrowserRouter>
       <Routes>

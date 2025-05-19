@@ -15,12 +15,21 @@
     width: 8vw;
 }
 
-.statsPage .backBtn:hover{
+.statsPage .backBtn p{
+    color: var(--primary-text-color);
+}
+
+.statsPage .backBtn p:hover{
     color:#5e5e5b;
+}
+
+#backBtnLeftArrowIcon{
+    color: var(--primary-backbtn-color);
 }
 
 .statsPage h1{
     text-align: center;
+    color: var(--primary-text-color);
 }
 
 .categoryStats{
@@ -30,13 +39,18 @@
 .categoryStats .cs{
     width: 50%;
     height: 50%;
-    border: 3px solid black;
+    border: 3px solid var(--primary-border-color);
     margin: 25px auto;
+}
+
+.categoryStats .cs h4{
+    color: var(--primary-text-color);
 }
 
 .categoryStats .cs p{
     margin-left: 10px;
     padding-top: 0;
+    color: var(--primary-text-color);
 }
 
 .categoryStats .cs header{
@@ -83,7 +97,7 @@
 .headerSep{
     margin-top: 0;
     height: 2px;
-    background-color: #000;
+    background-color: var(--primary-headerSep-color);
 }
 
 .statsSec{
