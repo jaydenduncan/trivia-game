@@ -1,9 +1,27 @@
 import "../css/stats.css";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Stats(){
+    const [stats, setStats] = useState([{}, {}, {}, {}, {}, {}, {}, {}]);
+
+    const getStats = async () => {
+        await fetch('/stats')
+        .then(res => res.json())
+        .then(data => setStats(data))
+        .catch(err => console.log(err));
+    };
+
+    useEffect(() => {
+        getStats();
+    }, []);
+
+    useEffect(() => {
+        console.log(stats);
+    }, [stats]);
+
     return (
         <div className="container">
             <div className="statsPage">
@@ -22,17 +40,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[0].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[0].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[0].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -43,17 +61,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[1].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[1].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[1].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -64,17 +82,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[2].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[2].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[2].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -85,17 +103,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[3].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[3].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[3].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -106,17 +124,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[4].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[4].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[4].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -127,17 +145,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[5].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[5].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[5].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -148,17 +166,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[6].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[6].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[6].longest_streak || 0}</p>
                         </div>
                     </div>
 
@@ -169,17 +187,17 @@ function Stats(){
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
                             <p className="statsLabel gamesPlayedLabel">Games Played</p>
-                            <p className="statsNum gamesPlayedNum">0</p>
+                            <p className="statsNum gamesPlayedNum">{stats[7].games_played || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec highScoreSec">
                             <p className="statsLabel highScoreLabel">High Score</p>
-                            <p className="statsNum highScoreNum">0</p>
+                            <p className="statsNum highScoreNum">{stats[7].high_score || 0}</p>
                         </div>
                         <hr/>
                         <div className="statsSec longestStreakSec">
                             <p className="statsLabel longestStreakLabel">Longest Streak</p>
-                            <p className="statsNum longestStreakNum">0</p>
+                            <p className="statsNum longestStreakNum">{stats[7].longest_streak || 0}</p>
                         </div>
                     </div>
                 </div>
