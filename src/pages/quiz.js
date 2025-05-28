@@ -33,6 +33,7 @@ function Quiz(){
     const [lives, setLives] = useState(3);
     const [points, setPoints] = useState(0);
     const [streak, setStreak] = useState(0);
+    const [currentLongestStreak, setCurrentLongestStreak] = useState(0);
     const [multiplier, setMultiplier] = useState(1);
     const [questionNum, setQuestionNum] = useState(1);
     const [difficulty, setDifficulty] = useState(Level.EASY);
@@ -43,6 +44,7 @@ function Quiz(){
     const [question, setQuestion] = useState("");
     const [correctAns, setCorrectAns] = useState("");
     const [choices, setChoices] = useState([]);
+    const [categoryStats, setCategoryStats] = useState({});
 
     function changeBgColor(){
         if(document.getElementById("quizPage")){
@@ -51,7 +53,7 @@ function Quiz(){
         }
     }
 
-    async function initialize(){
+    async function getInitialSettings(){
         await fetch('/settings')
         .then(res => res.json())
         .then(data => {
@@ -70,7 +72,7 @@ function Quiz(){
                     break;
             }
 
-            switch(data[0].game_speed){
+            switch(data[0].game_speed){ 
                 case "10":
                     initialSeconds = 10;
                     break;
@@ -87,6 +89,37 @@ function Quiz(){
             setSeconds(initialSeconds);
             setInitialSeconds(initialSeconds);
         })
+        .catch(err => console.log(err));
+    }
+
+    async function getInitialStats(){
+        let categoryData;
+
+        await fetch(`/stats/categories/${params.category.toLowerCase()}`)
+        .then(res => res.json())
+        .then(data => {
+            categoryData = data[0];
+
+            fetch(`/stats/${categoryData.id}`)
+            .then(res => res.json())
+            .then(data => setCategoryStats(data[0]))
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    }
+
+    async function updateStats(){
+        await fetch(`/stats/${categoryStats.categoryId}`, {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "games_played": categoryStats.games_played + 1,
+                "high_score": (points > categoryStats.high_score) ? points : categoryStats.high_score,
+                "longest_streak": (currentLongestStreak > categoryStats.longest_streak) ? currentLongestStreak : categoryStats.longest_streak
+            })
+        })
+        .then(res => res)
+        .then(data => console.log("Successfully updated stats row!"))
         .catch(err => console.log(err));
     }
 
@@ -273,10 +306,15 @@ function Quiz(){
 
     // Component constructor
     useEffect(() => {
-        initialize();
+        getInitialSettings();
+        getInitialStats();
         changeBgColor();
         fillEasyBank(); // start by filling up easy question bank
     }, []);
+
+    useEffect(() => {
+        console.log(categoryStats);
+    }, [categoryStats]);
 
     useEffect(() => {
         // Start timer when the round starts and the question is done loading
@@ -367,6 +405,8 @@ function Quiz(){
 
     // Set multiplier based on streak
     useEffect(() => {
+        if(streak > currentLongestStreak) setCurrentLongestStreak(streak);
+
         if(streak === 0) setMultiplier(1);
         else if(streak === 5) setMultiplier(2);
         else if(streak === 10) setMultiplier(3);
@@ -375,6 +415,7 @@ function Quiz(){
     // End game after all 3 lives are lost
     useEffect(() => {
         if(lives === 0){
+            updateStats();
             setTimeout(() => {
                 alert("GAME OVER" + "\n" + "Total Points: " + points);
                 window.location = "/categories";
