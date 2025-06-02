@@ -8,6 +8,7 @@ import Settings from './pages/settings';
 import Help from './pages/help';
 import Confirm from './pages/confirm';
 import Quiz from './pages/quiz';
+import Rules from './pages/rules';
 
 function App() {
   const [theme, setTheme] = useState("");
@@ -41,6 +42,7 @@ function App() {
         <Route path='stats' element={<Stats />} />
         <Route path='settings' element={<Settings />} />
         <Route path='help' element={<Help />} />
+        <Route path='rules' element={<Rules />} />
       </Routes>
     </BrowserRouter>
   );

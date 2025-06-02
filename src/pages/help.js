@@ -21,9 +21,11 @@ function Help(){
                         and have fun!
                     </p>
                     <p className="rulesSec">
-                        The rules for this trivia game are quite simple. Click 
-                        <a> here </a>
-                        to review the rules and learn how your points are accumulated as you play.
+                        The rules for this trivia game are quite simple. Click&nbsp;
+                        <Link to="/rules">
+                            <span className="rulesLink">here</span>
+                        </Link>
+                        &nbsp;to review the rules and learn how your points are accumulated as you play.
                     </p>
                     <p className="helpDivClosing">Thanks for playing!</p>
                 </div>
