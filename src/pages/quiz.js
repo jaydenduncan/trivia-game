@@ -462,6 +462,7 @@ function Quiz(){
                     </div>
                 </div>
                 <div id="gameInfo">
+                    <p id="giHighScore">High Score: {categoryStats.high_score}</p>
                     <p id="giLives">Lives: {lives}</p>
                     <p id="giPoints">Points: {points}</p>
                     <p id="giMP">Multiplier: {multiplier}x</p>
