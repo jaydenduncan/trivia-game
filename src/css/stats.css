@@ -5,7 +5,7 @@
 }
 
 .statsPage .backBtn{
-    position: absolute;
+    position: fixed;
     left: 5%;
     top: 5%;
     display: flex;
@@ -13,6 +13,7 @@
     align-items: center;
     height: 2vh;
     width: 8vw;
+    z-index: 9999;
 }
 
 .statsPage .backBtn p{
