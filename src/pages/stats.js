@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/fontawesome-free-solid";
 
 function Stats(){
     const [stats, setStats] = useState([{}, {}, {}, {}, {}, {}, {}, {}]);
+    const [maxCategories, setMaxCategories] = useState(new Set());
 
     const getStats = async () => {
         await fetch('/stats')
@@ -14,13 +16,47 @@ function Stats(){
         .catch(err => console.log(err));
     };
 
+    const getMaxCategories = async () => {
+        await fetch('/stats/maxGamesPlayed')
+        .then(res => res.json())
+        .then(data => {
+            let result = new Set();
+
+            for(let i=0; i<data.length; i++){
+                result.add(data[i]["categoryId"] - 1);
+            }
+
+            setMaxCategories(result);
+        })
+        .catch(err => console.log(err));
+    };
+
+    const displayFavIcons = () => {
+        let favoriteIcons = document.getElementsByClassName("favoriteIcon");
+
+        for(let i=0; i<favoriteIcons.length; i++){
+            if(!maxCategories.has(i)){
+                favoriteIcons[i].style.display = "none";
+            }
+            else{
+                favoriteIcons[i].style.display = "";
+            }
+        }
+    };
+
     useEffect(() => {
         getStats();
+        getMaxCategories();
     }, []);
 
     useEffect(() => {
         console.log(stats);
     }, [stats]);
+
+    useEffect(() => {
+        console.log(maxCategories);
+        displayFavIcons();
+    }, [maxCategories]);
 
     return (
         <div className="container">
@@ -36,6 +72,7 @@ function Stats(){
                     <div className="cs generalStats">
                         <header className="generalHeader">
                             <h4>General</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -57,6 +94,7 @@ function Stats(){
                     <div className="cs artStats">
                         <header className="artHeader">
                             <h4>Art</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -78,6 +116,7 @@ function Stats(){
                     <div className="cs scienceStats">
                         <header className="scienceHeader">
                             <h4>Science</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -99,6 +138,7 @@ function Stats(){
                     <div className="cs geographyStats">
                         <header className="geographyHeader">
                             <h4>Geography</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -120,6 +160,7 @@ function Stats(){
                     <div className="cs historyStats">
                         <header className="historyHeader">
                             <h4>History</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -141,6 +182,7 @@ function Stats(){
                     <div className="cs entertainmentStats">
                         <header className="entertainmentHeader">
                             <h4>Entertainment</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -162,6 +204,7 @@ function Stats(){
                     <div className="cs mathStats">
                         <header className="mathHeader">
                             <h4>Math</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">
@@ -183,6 +226,7 @@ function Stats(){
                     <div className="cs sportsStats">
                         <header className="sportsHeader">
                             <h4>Sports</h4>
+                            <FontAwesomeIcon className="favoriteIcon" icon={faStar} />
                         </header>
                         <hr className="headerSep"/>
                         <div className="statsSec gamesPlayedSec">

@@ -54,7 +54,15 @@
 }
 
 .categoryStats .cs header{
+    position: relative;
     text-align: center;
+}
+
+.categoryStats .cs header .favoriteIcon{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: var(--primary-text-color);
 }
 
 .generalHeader{
