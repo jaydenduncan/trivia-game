@@ -7,6 +7,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 function Settings(){
     const [settings, setSettings] = useState({difficulty: "", game_speed: "", theme: ""});
 
+    // Fetch initial settings on first render of component
     const initializeSettings = async () => {
         await fetch("/settings")
         .then(res => res.json())
@@ -141,7 +142,6 @@ function Settings(){
     }, []);
 
     useEffect(() => {
-        console.log(settings);
         changeSettingBG();
     }, [settings]);
 

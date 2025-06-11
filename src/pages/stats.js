@@ -9,6 +9,7 @@ function Stats(){
     const [stats, setStats] = useState([{}, {}, {}, {}, {}, {}, {}, {}]);
     const [maxCategories, setMaxCategories] = useState(new Set());
 
+    // Fetch initial stats after first render of component
     const getStats = async () => {
         await fetch('/stats')
         .then(res => res.json())
@@ -16,6 +17,7 @@ function Stats(){
         .catch(err => console.log(err));
     };
 
+    // Fetch the category or categories with the most number of games played
     const getMaxCategories = async () => {
         await fetch('/stats/maxGamesPlayed')
         .then(res => res.json())
@@ -34,6 +36,7 @@ function Stats(){
     const displayFavIcons = () => {
         let favoriteIcons = document.getElementsByClassName("favoriteIcon");
 
+        // Only display the favorite icons of the categories with the most number of games played
         for(let i=0; i<favoriteIcons.length; i++){
             if(!maxCategories.has(i)){
                 favoriteIcons[i].style.display = "none";
@@ -50,11 +53,9 @@ function Stats(){
     }, []);
 
     useEffect(() => {
-        console.log(stats);
     }, [stats]);
 
     useEffect(() => {
-        console.log(maxCategories);
         displayFavIcons();
     }, [maxCategories]);
 

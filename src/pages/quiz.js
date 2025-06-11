@@ -49,10 +49,11 @@ function Quiz(){
     function changeBgColor(){
         if(document.getElementById("quizPage")){
             let page = document.getElementById("quizPage");
-            page.style.backgroundColor = themeList[params.category][0];
+            page.style.backgroundColor = themeList[params.category][0]; // change background color based on category
         }
     }
 
+    // Fetch initial settings on first render of component
     async function getInitialSettings(){
         await fetch('/settings')
         .then(res => res.json())
@@ -92,6 +93,7 @@ function Quiz(){
         .catch(err => console.log(err));
     }
 
+    // Fetch initial stats on first render of component
     async function getInitialStats(){
         let categoryData;
 
@@ -108,6 +110,7 @@ function Quiz(){
         .catch(err => console.log(err));
     }
 
+    // Update user's stats after game is over
     async function updateStats(){
         await fetch(`/stats/${categoryStats.categoryId}`, {
             method: 'put',
@@ -311,10 +314,6 @@ function Quiz(){
         changeBgColor();
         fillEasyBank(); // start by filling up easy question bank
     }, []);
-
-    useEffect(() => {
-        console.log(categoryStats);
-    }, [categoryStats]);
 
     useEffect(() => {
         // Start timer when the round starts and the question is done loading
